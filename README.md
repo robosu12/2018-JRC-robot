@@ -1,6 +1,8 @@
 # 2018-JRC-robot
 2018京东机器人挑战赛-机器人全自主导航
 
+![robot](https://github.com/robosu12/2018-JRC-robot/blob/master/picture/robot.jpg)  ![grasp](https://github.com/robosu12/2018-JRC-robot/blob/master/picture/robot_grasping.JPG)
+
 1. 背景说明：此次比赛为无人超市主题，在无人超市中放置许多货架，货架每层都放置许多物品（可乐，牙膏，牙刷，火腿肠，薯片，书本，口红等），物品清单已知，机器人在超市入口处待命。现场随机指定10种物品，然后一键启动机器人，要求机器人全自主运行，获取所有物品，然后放置到指定出口箱内。比赛时间5分钟，以最后抓取物品个数和完成时间计算分数；
 2. 机器人说明：移动平台为四轮麦克纳姆轮全向移动平台，采用kinova 6自由度机械臂和气动装置进行物品吸取和抓取，RGBD深度相机进行物品识别和定位，2D 激光进行机器人定位和地图构建；
 3. 软件环境：Ubuntu16.04 + ROS kinetic
