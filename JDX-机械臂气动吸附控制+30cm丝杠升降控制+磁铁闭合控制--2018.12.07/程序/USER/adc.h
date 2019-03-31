@@ -1,0 +1,45 @@
+#ifndef __ADC_H
+#define __ADC_H	
+//////////////////////////////////////////////////////////////////////////////////	 
+//本程序只供学习使用，未经作者许可，不得用于其它任何用途
+//Mini STM32开发板
+//ADC 驱动代码			   
+//正点原子@ALIENTEK
+//技术论坛:www.openedv.com
+//修改日期:2010/6/7 
+//版本：V1.0
+//版权所有，盗版必究。
+//Copyright(C) 正点原子 2009-2019
+//All rights reserved					   
+//////////////////////////////////////////////////////////////////////////////////	 
+
+#include "stm32f10x.h"
+
+extern float Az,gyroscope_rate,ZAdMax,ZAdMin,AD_gyro,Gyro_b,anglez,g_nCarGyroVal,angle_kalman,angle_dot_kalman;
+extern int Gyro_zero,z;
+
+#define ADC_CH0  0 //通道0
+#define ADC_CH1  1 //通道1
+#define ADC_CH2  2 //通道2
+#define ADC_CH3  3 //通道3	   
+ 
+void Adc_Init(void);
+u16  Get_Adc(u8 ch);
+void acc_z(void);  
+ 
+#endif 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

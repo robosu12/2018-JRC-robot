@@ -1,0 +1,167 @@
+C51 COMPILER V7.10   USART                                                                 12/16/2014 13:03:10 PAGE 1   
+
+
+C51 COMPILER V7.10, COMPILATION OF MODULE USART
+OBJECT MODULE PLACED IN ..\obj\usart.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\user\usart.c BROWSE INCDIR(..\code;..\user) DEBUG OBJECTEXTEND PRINT(.\u
+                    -sart.lst) TABS(5) OBJECT(..\obj\usart.obj)
+
+line level    source
+
+   1          /***************************飞音云电子****************************
+   2          **  工程名称：YS-V0.7语音识别模块驱动程序
+   3          **   CPU: STC11L08XE
+   4          **   晶振：22.1184MHZ
+   5          **   波特率：9600 bit/S
+   6          **   配套产品信息：YS-V0.7语音识别开发板
+   7          **                http://yuesheng001.taobao.com
+   8          **  作者：zdings
+   9          **  联系：751956552@qq.com
+  10          **  修改日期：2013.9.13
+  11          **  说明：口令模式： 即每次识别时都需要说“小杰”这个口令 ，才能够进行下一级的识别
+  12          /***************************飞音云电子******************************/
+  13          #include "config.h"
+  14          #define FOSC 22118400L      //System frequency
+  15          uint32_t baud=9600;           //UART baudrate
+  16          /************************************************************************
+  17          函 数 名： 串口初始化
+  18          功能描述： STC10L08XE 单片机串口初始化函数
+  19          返回函数： none
+  20          其他说明： none
+  21          **************************************************************************/
+  22          void UartIni(void)
+  23          {
+  24   1          SCON = 0x50;            //8-bit variable UART
+  25   1          TMOD = 0x20;            //Set Timer1 as 8-bit auto reload mode
+  26   1          TH1 = TL1 = -(FOSC/12/32/baud); //Set auto-reload vaule
+  27   1          TR1 = 1;                //Timer1 start run
+  28   1          ES = 1;                 //Enable UART interrupt
+  29   1          EA = 1;                 //Open master interrupt switch
+  30   1      }
+  31          /************************************************************************
+  32          功能描述：     串口发送一字节数据
+  33          入口参数：     DAT:带发送的数据
+  34          返 回 值：     none
+  35          其他说明：     none
+  36          **************************************************************************/
+  37          void UARTSendByte(uint8_t DAT)
+  38          {
+  39   1           ES  =  0;
+  40   1           TI=0;
+  41   1           SBUF = DAT;
+  42   1           while(TI==0);
+  43   1           TI=0;
+  44   1           ES = 1;
+  45   1      }
+  46          /************************************************************************
+  47          功能描述： 串口发送字符串数据
+  48          入口参数：     *DAT：字符串指针
+  49          返 回 值： none
+  50          其他说明： API 供外部使用，直观！
+  51          **************************************************************************/
+  52          void PrintCom(uint8_t *DAT)
+  53          {
+  54   1           while(*DAT)
+C51 COMPILER V7.10   USART                                                                 12/16/2014 13:03:10 PAGE 2   
+
+  55   1           {
+  56   2                UARTSendByte(*DAT++);
+  57   2           }    
+  58   1      }
+  59          
+  60          void PrintCom_len(uint8_t *DAT,uint8_t len)
+  61          {
+  62   1           uint8_t i;
+  63   1           for(i=0;i<len;i++)
+  64   1           {
+  65   2                UARTSendByte(*DAT++);
+  66   2           }    
+  67   1      }
+  68          
+  69          
+  70          /**************芯片设置命令*********************/
+  71          uint8_t SYN_StopCom[]={0xFD,0X00,0X02,0X02,0XFD};//停止合成
+  72          uint8_t SYN_SuspendCom[]={0XFD,0X00,0X02,0X03,0XFC};//暂停合成
+  73          uint8_t SYN_RecoverCom[]={0XFD,0X00,0X02,0X04,0XFB};//恢复合成
+  74          uint8_t SYN_ChackCom[]={0XFD,0X00,0X02,0X21,0XDE};//状态查询
+  75          uint8_t SYN_PowerDownCom[]={0XFD,0X00,0X02,0X88,0X77};//进入POWER DOWN 状态命令
+  76          
+  77          /***********************************************/
+  78          
+  79          
+  80          
+  81          /***********************************************************
+  82          * 名    称：  YS-SYN6288 文本合成函数
+  83          * 功    能：  发送合成文本到SYN6288芯片进行合成播放
+  84          * 入口参数：Music(背景音乐选择):0无背景音乐。1-15：相关背景音乐
+  85                      *HZdata:文本指针变量 
+  86          * 出口参数：
+  87          * 说    明： 本函数只用于文本合成，具备背景音乐选择。默认波特率9600bps。                        
+  88          * 调用方法：例： SYN_FrameInfo（0，“乐声电子科技”）；
+  89          **********************************************************/
+  90          void SYN_FrameInfo(uint8_t Music,uint8_t *HZdata)
+  91          {
+  92   1      /****************需要发送的文本**********************************/ 
+  93   1                 unsigned  char  Frame_Info[5];
+  94   1               unsigned  char  HZ_Length;  
+  95   1                 unsigned  char  ecc  = 0;              //定义校验字节
+  96   1                unsigned  int i=0; 
+  97   1                 HZ_Length =strlen(HZdata);             //需要发送文本的长度
+  98   1       
+  99   1      /*****************帧固定配置信息**************************************/           
+ 100   1                 Frame_Info[0] = 0xFD ;            //构造帧头FD
+ 101   1                 Frame_Info[1] = 0x00 ;            //构造数据区长度的高字节
+ 102   1                 Frame_Info[2] = HZ_Length + 3;         //构造数据区长度的低字节
+ 103   1                 Frame_Info[3] = 0x01 ;            //构造命令字：合成播放命令                    
+ 104   1                 Frame_Info[4] = 0x01 | Music<<4 ;  //构造命令参数：背景音乐设定
+ 105   1      
+ 106   1      /*******************校验码计算***************************************/           
+ 107   1                 for(i = 0; i<5; i++)                   //依次发送构造好的5个帧头字节
+ 108   1                {  
+ 109   2                    ecc=ecc^(Frame_Info[i]);       //对发送的字节进行异或校验    
+ 110   2                }
+ 111   1      
+ 112   1                 for(i= 0; i<HZ_Length; i++)            //依次发送待合成的文本数据
+ 113   1                {  
+ 114   2                    ecc=ecc^(HZdata[i]);                     //对发送的字节进行异或校验         
+ 115   2                }          
+ 116   1      /*******************发送帧信息***************************************/            
+C51 COMPILER V7.10   USART                                                                 12/16/2014 13:03:10 PAGE 3   
+
+ 117   1                 PrintCom_len(Frame_Info,5); //发送帧配置
+ 118   1                 PrintCom_len(HZdata,HZ_Length); //发送文本
+ 119   1                 UARTSendByte(ecc);    //发送纠错码
+ 120   1      }
+ 121          
+ 122          
+ 123          /***********************************************************
+ 124          * 名    称： void  main(void)
+ 125          * 功    能： 主函数 程序入口
+ 126          * 入口参数： *Info_data:固定的配置信息变量 
+ 127          * 出口参数：
+ 128          * 说    明：本函数用于配置，停止合成、暂停合成等设置 ，默认波特率9600bps。                      
+ 129          * 调用方法：通过调用已经定义的相关数组进行配置。 
+ 130          **********************************************************/
+ 131          void YS_SYN_Set(uint8_t *Info_data)
+ 132          {
+ 133   1           uint8_t Com_Len;
+ 134   1           Com_Len =strlen(Info_data);
+ 135   1           PrintCom_len(Info_data,Com_Len);
+ 136   1      }
+ 137          
+ 138          
+ 139          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    266    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     27      20
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

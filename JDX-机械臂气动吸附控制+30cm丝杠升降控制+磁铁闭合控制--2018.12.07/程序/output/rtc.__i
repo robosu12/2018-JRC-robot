@@ -1,0 +1,1 @@
+-c --cpu Cortex-M3 -D__MICROLIB -g -O3 -Otime --apcs=interwork -I..\USER -I..\FWlib\inc -I..\CMSIS -I..\ff9 -I "D:\keilÈí¼þ\keil\ARM\CMSIS\Include" -I "D:\keilÈí¼þ\keil\ARM\INC\ST\STM32F10x" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o "..\output\rtc.o" --omf_browse "..\output\rtc.crf" --depend "..\output\rtc.d" "rtc.c"

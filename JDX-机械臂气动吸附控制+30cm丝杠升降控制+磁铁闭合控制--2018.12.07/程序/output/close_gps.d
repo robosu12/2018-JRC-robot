@@ -1,0 +1,21 @@
+..\output\close_gps.o: close_gps.c
+..\output\close_gps.o: ..\CMSIS\stm32f10x.h
+..\output\close_gps.o: ..\CMSIS\core_cm3.h
+..\output\close_gps.o: E:\Program Files\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\close_gps.o: ..\CMSIS\system_stm32f10x.h
+..\output\close_gps.o: ..\USER\stm32f10x_conf.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_adc.h
+..\output\close_gps.o: ..\CMSIS\stm32f10x.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_dma.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_exti.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_flash.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_fsmc.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_gpio.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_rcc.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_rtc.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_sdio.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_spi.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_tim.h
+..\output\close_gps.o: ..\FWlib\inc\stm32f10x_usart.h
+..\output\close_gps.o: ..\FWlib\inc\misc.h
+..\output\close_gps.o: close_GPS.h

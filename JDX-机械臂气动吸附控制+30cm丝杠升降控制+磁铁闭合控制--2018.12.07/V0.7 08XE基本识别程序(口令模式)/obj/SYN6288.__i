@@ -1,0 +1,1 @@
+"..\code\SYN6288.C" BROWSE INCDIR(..\code;..\user) DEBUG OBJECTEXTEND PRINT(.\SYN6288.lst) TABS (5) OBJECT(..\obj\SYN6288.obj)

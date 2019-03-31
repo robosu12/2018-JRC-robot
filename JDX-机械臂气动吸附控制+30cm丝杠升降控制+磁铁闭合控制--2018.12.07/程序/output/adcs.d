@@ -1,0 +1,21 @@
+..\output\adcs.o: ADCS.c
+..\output\adcs.o: ADCS.h
+..\output\adcs.o: ..\CMSIS\stm32f10x.h
+..\output\adcs.o: ..\CMSIS\core_cm3.h
+..\output\adcs.o: E:\Program Files\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\adcs.o: ..\CMSIS\system_stm32f10x.h
+..\output\adcs.o: ..\USER\stm32f10x_conf.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_adc.h
+..\output\adcs.o: ..\CMSIS\stm32f10x.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_dma.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_exti.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_flash.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_fsmc.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_gpio.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_rcc.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_rtc.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_sdio.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_spi.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_tim.h
+..\output\adcs.o: ..\FWlib\inc\stm32f10x_usart.h
+..\output\adcs.o: ..\FWlib\inc\misc.h

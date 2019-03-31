@@ -1,0 +1,22 @@
+..\output\lcd5110.o: lcd5110.c
+..\output\lcd5110.o: lcd5110.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_gpio.h
+..\output\lcd5110.o: ..\CMSIS\stm32f10x.h
+..\output\lcd5110.o: ..\CMSIS\core_cm3.h
+..\output\lcd5110.o: E:\Program Files\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\lcd5110.o: ..\CMSIS\system_stm32f10x.h
+..\output\lcd5110.o: ..\USER\stm32f10x_conf.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_adc.h
+..\output\lcd5110.o: ..\CMSIS\stm32f10x.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_dma.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_exti.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_flash.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_fsmc.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_gpio.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_rcc.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_rtc.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_sdio.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_spi.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_tim.h
+..\output\lcd5110.o: ..\FWlib\inc\stm32f10x_usart.h
+..\output\lcd5110.o: ..\FWlib\inc\misc.h

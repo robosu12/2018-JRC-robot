@@ -1,0 +1,29 @@
+..\output\receive.o: receive.c
+..\output\receive.o: receive.h
+..\output\receive.o: GPS.h
+..\output\receive.o: ..\CMSIS\stm32f10x.h
+..\output\receive.o: ..\CMSIS\core_cm3.h
+..\output\receive.o: E:\Program Files\keil5\ARM\ARMCC\Bin\..\include\stdint.h
+..\output\receive.o: ..\CMSIS\system_stm32f10x.h
+..\output\receive.o: ..\USER\stm32f10x_conf.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_adc.h
+..\output\receive.o: ..\CMSIS\stm32f10x.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_dma.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_exti.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_flash.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_fsmc.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_gpio.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_rcc.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_rtc.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_sdio.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_spi.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_tim.h
+..\output\receive.o: ..\FWlib\inc\stm32f10x_usart.h
+..\output\receive.o: ..\FWlib\inc\misc.h
+..\output\receive.o: E:\Program Files\keil5\ARM\ARMCC\Bin\..\include\string.h
+..\output\receive.o: lcd.h
+..\output\receive.o: lcd_botton.h
+..\output\receive.o: touch.h
+..\output\receive.o: distant.h
+..\output\receive.o: time_test.h
+..\output\receive.o: speech.h

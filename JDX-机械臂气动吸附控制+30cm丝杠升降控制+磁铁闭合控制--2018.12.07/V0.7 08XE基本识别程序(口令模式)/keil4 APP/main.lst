@@ -1,0 +1,242 @@
+C51 COMPILER V7.10   MAIN                                                                  12/16/2014 13:03:10 PAGE 1   
+
+
+C51 COMPILER V7.10, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN ..\obj\main.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\code\main.c BROWSE INCDIR(..\code;..\user) DEBUG OBJECTEXTEND PRINT(.\ma
+                    -in.lst) TABS(5) OBJECT(..\obj\main.obj)
+
+line level    source
+
+   1          /***************************飞音云电子****************************
+   2          **  工程名称：YS-V0.7语音识别模块驱动程序
+   3          **   CPU: STC11L08XE
+   4          **   晶振：22.1184MHZ
+   5          **   波特率：9600 bit/S
+   6          **   配套产品信息：YS-V0.7语音识别开发板
+   7          **                http://yuesheng001.taobao.com
+   8          **  作者：zdings
+   9          **  联系：751956552@qq.com
+  10          **  修改日期：2013.9.13
+  11          **  说明：口令模式： 即每次识别时都需要说“小杰”这个口令 ，才能够进行下一级的识别
+  12          /***************************飞音云电子******************************/
+  13          #include "config.h"
+  14          /************************************************************************************/
+  15          //   nAsrStatus 用来在main主程序中表示程序运行的状态，不是LD3320芯片内部的状态寄存器
+  16          //   LD_ASR_NONE:        表示没有在作ASR识别
+  17          //   LD_ASR_RUNING：          表示LD3320正在作ASR识别中
+  18          //   LD_ASR_FOUNDOK:          表示一次识别流程结束后，有一个识别结果
+  19          //   LD_ASR_FOUNDZERO:   表示一次识别流程结束后，没有识别结果
+  20          //   LD_ASR_ERROR:       表示一次识别流程中LD3320芯片内部出现不正确的状态
+  21          /***********************************************************************************/
+  22          uint8 idata nAsrStatus=0;     
+  23          void MCU_init(); 
+  24          void ProcessInt0(); //识别处理函数
+  25          void delay(unsigned long uldata);
+  26          void User_handle(uint8 dat);//用户执行操作函数
+  27          void Delay200ms();
+  28          void Led_test(void);//单片机工作指示
+  29          uint8_t G0_flag=DISABLE;//运行标志，ENABLE:运行。DISABLE:禁止运行 
+  30          sbit LED=P4^2;//信号指示灯
+  31          
+  32          /***********************************************************
+  33          * 名    称： void  main(void)
+  34          * 功    能： 主函数 程序入口
+  35          * 入口参数：  
+  36          * 出口参数：
+  37          * 说    明：                        
+  38          * 调用方法： 
+  39          **********************************************************/ 
+  40          void  main(void)
+  41          {
+  42   1           uint8 idata nAsrRes;
+  43   1           uint8 i=0;
+  44   1           Led_test();
+  45   1           MCU_init();
+  46   1           LD_Reset();
+  47   1           UartIni(); /*串口初始化*/
+  48   1           nAsrStatus = LD_ASR_NONE;          //   初始状态：没有在作ASR
+  49   1           
+  50   1      
+  51   1           while(1)
+  52   1           {
+  53   2      
+  54   2                switch(nAsrStatus)
+C51 COMPILER V7.10   MAIN                                                                  12/16/2014 13:03:10 PAGE 2   
+
+  55   2                {
+  56   3                     case LD_ASR_RUNING:
+  57   3                     case LD_ASR_ERROR:       
+  58   3                          break;
+  59   3                     case LD_ASR_NONE:
+  60   3                     {
+  61   4                          nAsrStatus=LD_ASR_RUNING;
+  62   4                          if (RunASR()==0)    /*   启动一次ASR识别流程：ASR初始化，ASR添加关键词语，启动ASR运算*/
+  63   4                          {
+  64   5                               nAsrStatus = LD_ASR_ERROR;
+  65   5                          }
+  66   4                          break;
+  67   4                     }
+  68   3                     case LD_ASR_FOUNDOK: /*  一次ASR识别流程结束，去取ASR识别结果*/
+  69   3                     {                   
+  70   4                          nAsrRes = LD_GetResult();          /*获取结果*/
+  71   4                          User_handle(nAsrRes);//用户执行函数 
+  72   4                          nAsrStatus = LD_ASR_NONE;
+  73   4                          break;
+  74   4                     }
+  75   3                     case LD_ASR_FOUNDZERO:
+  76   3                     default:
+  77   3                     {
+  78   4                          nAsrStatus = LD_ASR_NONE;
+  79   4                          break;
+  80   4                     }
+  81   3                }// switch                    
+  82   2           }// while
+  83   1      
+  84   1      }
+  85          /***********************************************************
+  86          * 名    称：    LED灯测试
+  87          * 功    能： 单片机是否工作指示
+  88          * 入口参数： 无 
+  89          * 出口参数：无
+  90          * 说    明：                        
+  91          **********************************************************/
+  92          void Led_test(void)
+  93          {
+  94   1           LED=~ LED;
+  95   1           Delay200ms();
+  96   1           LED=~ LED;
+  97   1           Delay200ms();
+  98   1           LED=~ LED;
+  99   1           Delay200ms();
+ 100   1           LED=~ LED;
+ 101   1           Delay200ms();
+ 102   1           LED=~ LED;
+ 103   1           Delay200ms();
+ 104   1           LED=~ LED;
+ 105   1      }
+ 106          /***********************************************************
+ 107          * 名    称： void MCU_init()
+ 108          * 功    能： 单片机初始化
+ 109          * 入口参数：  
+ 110          * 出口参数：
+ 111          * 说    明：                        
+ 112          * 调用方法： 
+ 113          **********************************************************/ 
+ 114          void MCU_init()
+ 115          {
+ 116   1           P0 = 0xff;
+C51 COMPILER V7.10   MAIN                                                                  12/16/2014 13:03:10 PAGE 3   
+
+ 117   1           P1 = 0xff;
+ 118   1           P2 = 0xff;
+ 119   1           P3 = 0xff;
+ 120   1           P4 = 0xff;
+ 121   1           
+ 122   1      
+ 123   1           LD_MODE = 0;        //   设置MD管脚为低，并行模式读写
+ 124   1           IE0=1;
+ 125   1           EX0=1;
+ 126   1           EA=1;
+ 127   1      }
+ 128          /***********************************************************
+ 129          * 名    称：   延时函数
+ 130          * 功    能：
+ 131          * 入口参数：  
+ 132          * 出口参数：
+ 133          * 说    明：                        
+ 134          * 调用方法： 
+ 135          **********************************************************/ 
+ 136          void Delay200us()        //@22.1184MHz
+ 137          {
+ 138   1           unsigned char i, j;
+ 139   1           _nop_();
+ 140   1           _nop_();
+ 141   1           i = 5;
+ 142   1           j = 73;
+ 143   1           do
+ 144   1           {
+ 145   2                while (--j);
+ 146   2           } while (--i);
+ 147   1      }
+ 148          
+ 149          void  delay(unsigned long uldata)
+ 150          {
+ 151   1           unsigned int j  =  0;
+ 152   1           unsigned int g  =  0;
+ 153   1           while(uldata--)
+ 154   1           Delay200us();
+ 155   1      }
+ 156          
+ 157          void Delay200ms()        //@22.1184MHz
+ 158          {
+ 159   1           unsigned char i, j, k;
+ 160   1      
+ 161   1           i = 17;
+ 162   1           j = 208;
+ 163   1           k = 27;
+ 164   1           do
+ 165   1           {
+ 166   2                do
+ 167   2                {
+ 168   3                     while (--k);
+ 169   3                } while (--j);
+ 170   2           } while (--i);
+ 171   1      }
+ 172          
+ 173          /***********************************************************
+ 174          * 名    称： 中断处理函数
+ 175          * 功    能：
+ 176          * 入口参数：  
+ 177          * 出口参数：
+ 178          * 说    明：                        
+C51 COMPILER V7.10   MAIN                                                                  12/16/2014 13:03:10 PAGE 4   
+
+ 179          * 调用方法： 
+ 180          **********************************************************/ 
+ 181          void ExtInt0Handler(void) interrupt 0  
+ 182          {    
+ 183   1           ProcessInt0();                
+ 184   1      }
+ 185          /***********************************************************
+ 186          * 名    称：用户执行函数 
+ 187          * 功    能：识别成功后，执行动作可在此进行修改 
+ 188          * 入口参数： 无 
+ 189          * 出口参数：无
+ 190          * 说    明：                        
+ 191          **********************************************************/
+ 192          void      User_handle(uint8 dat)
+ 193          {
+ 194   1           //UARTSendByte(dat);//串口识别码（十六进制）
+ 195   1                 if(0==dat)
+ 196   1                 {
+ 197   2                     UARTSendByte(dat);//串口识别码（十六进制）
+ 198   2                     G0_flag=ENABLE;
+ 199   2                     LED=~LED;
+ 200   2                 }
+ 201   1                 else if(ENABLE==G0_flag)
+ 202   1                 {   
+ 203   2                          //G0_flag=DISABLE;
+ 204   2                          LED=~LED;
+ 205   2                          UARTSendByte(dat);//串口识别码（十六进制）
+ 206   2                     
+ 207   2                     }    
+ 208   1                     else      
+ 209   1                     {
+ 210   2                          //PrintCom("请说出一级口令\r\n"); /*text.....*/   
+ 211   2                     }
+ 212   1      }     
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    272    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1      10
+   IDATA SIZE       =      1       1
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
