@@ -1,0 +1,40 @@
+<launch>
+
+    <arg name="_ip_address"  default="192.168.0.10"/>
+
+	<!-- Start the static_transform_publisher node -->
+	<node pkg="tf" type="static_transform_publisher" name="base_laser_tf" args="0.31 0 0 -0.011 0 0 base_link laser_link 100" > </node>
+	<node pkg="tf" type="static_transform_publisher" name="laser_imu_tf" args="-0.5 0 0 0 0 0 laser_link imu_link 100"  > </node>
+	<!-- node pkg="tf" type="static_transform_publisher" name="map_odom_combined_tf" args="0.0 0 0 0 0 0 map odom_combined 100" > </node> -->
+	<node pkg="tf" type="static_transform_publisher" name="map_odom_base_tf" args="0.0 0 0 0 0 0 map odom_base 100"  > </node>
+
+	<!-- Start the base_controller node -->
+	<node name="base_controller" pkg="base_controller" type="base_controller" output="screen" launch-prefix="gnome-terminal -e" >
+           <param name="Is_need_obstacle_avoidance" type="bool" value="false"/>
+    <!--remap from="/usb_cam/image_raw" to="/camera/image_raw" -->
+	</node>
+
+	<!-- Start the robot_tf_set node -->
+	<!-- <node name="robot_tf_listener" pkg="robot_tf_set" type="robot_tf_setup" output="screen" launch-prefix="gnome-terminal -e" > </node> -->	
+	
+	<!-- Start the robot_pose_ekf node -->
+	<!-- include file="$(find robot_pose_ekf)/robot_pose_ekf.launch"/ -->
+
+	<!-- Start the key_board_control node -->
+	<node name="teleop_twist_keyboard" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" output="screen" > </node>
+	
+	<!-- Start the rplidar node -->
+	<!-- <include file="$(find rplidar_ros)/launch/rplidar.launch"/> -->
+
+	<!-- Start the ust-20lx node -->
+	<!-- <node name="urg_node" pkg="urg_node" type="urg_node" output="screen" args="_ip_address="192.168.0.10""> </node> -->
+
+	<!-- Start the ust-20lx node -->
+	<node name="hokuyo_node" pkg="hokuyo_node" type="hokuyo_node" output="screen">
+	  <param name="frame_id" value="laser_link" />
+	  <param name="min_ang" type="double" value="-1.60" />
+	  <param name="max_ang" type="double" value=" 1.60" />
+	  <param name="port" type="string" value="/dev/serial_laser" />
+
+	</node> 
+</launch>

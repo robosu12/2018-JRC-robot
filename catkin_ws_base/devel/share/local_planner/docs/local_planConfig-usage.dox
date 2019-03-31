@@ -1,0 +1,16 @@
+\subsubsection usage Usage
+\verbatim
+<node name="local_planner" pkg="local_planner" type="local_planner">
+  <param name="start_running" type="bool" value="False" />
+  <param name="Is_learn" type="bool" value="False" />
+  <param name="wp_dist" type="double" value="1.0" />
+  <param name="robotR" type="double" value="0.4" />
+  <param name="wt" type="double" value="0.3" />
+  <param name="ws" type="double" value="0.3" />
+  <param name="wc" type="double" value="0.4" />
+  <param name="max_v" type="double" value="0.3" />
+  <param name="ds" type="double" value="1.0" />
+  <param name="sig_s" type="double" value="0.3" />
+</node>
+\endverbatim
+

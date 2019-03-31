@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: local_planner
+Description: Description of local_planner
+Version: 0.0.0
+Cflags: -I/usr/local/include
+Libs: -L/usr/local/lib -llocal_planner
+Requires: nav_msgs roscpp rospy sensor_msgs tf

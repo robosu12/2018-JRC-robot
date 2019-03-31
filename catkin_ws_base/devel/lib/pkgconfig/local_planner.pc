@@ -1,0 +1,8 @@
+prefix=/home/robot/catkin_ws_base/devel
+
+Name: local_planner
+Description: Description of local_planner
+Version: 0.0.0
+Cflags: -I/home/robot/catkin_ws_base/devel/include -I/home/robot/catkin_ws_base/src/local_planner/include
+Libs: -L/home/robot/catkin_ws_base/devel/lib -llocal_planner
+Requires: nav_msgs roscpp rospy sensor_msgs tf

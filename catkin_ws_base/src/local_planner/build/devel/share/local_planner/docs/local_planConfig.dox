@@ -1,0 +1,15 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~start_running" : \b [bool] Is start running? min: False, default: False, max: True
+- \b "~Is_learn" : \b [bool] Is Learning? min: False, default: False, max: True
+- \b "~wp_dist" : \b [double] the nearest distance from robot to waypoint min: 0.0, default: 1.0, max: 2.8
+- \b "~robotR" : \b [double] the radius of robot min: 0.0, default: 0.4, max: 1.0
+- \b "~wt" : \b [double] the weigth of time cost min: 0.0, default: 0.6, max: 1.0
+- \b "~ws" : \b [double] the weigth of safety min: 0.0, default: 0.3, max: 1.0
+- \b "~wc" : \b [double] the weigth of consistency min: 0.0, default: 0.3, max: 1.0
+- \b "~max_v" : \b [double] the maximum velocity of robot min: 0.0, default: 0.3, max: 2.0
+- \b "~ds" : \b [double] the save distance from robot to obstacle min: 0.0, default: 1.0, max: 2.0
+- \b "~sig_s" : \b [double] the parameter sigma of speed planner min: 0.0, default: 0.3, max: 2.0
+

@@ -1,0 +1,21 @@
+<launch>
+
+
+  <!--node name="rviz" pkg="rviz" type="rviz" required="true"
+      args="-d $(find map_process)/rviz/rviz.rviz" /-->
+  <arg name="map_file" default="$(find map_process)/launch/globalmap.yaml"/>
+
+  <!-- Run the map server -->
+  <!--node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" >
+     <remap from="/map" to="/global_map"/>
+  </node-->
+
+
+  <node name="map_process" pkg="map_process" type="map_process_node" output="screen"> 
+     <param name="obs_threshold" type="int" value="65" />
+  </node>
+
+  <node name="global_planner" pkg="global_planner" type="global_planner_node" />
+  <node name="local_planner" pkg="local_planner" type="local_planner_node" />
+
+</launch>

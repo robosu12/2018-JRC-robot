@@ -1,0 +1,2 @@
+base_controller:global_planner:id_data_msgs:local_planner:map_process:teleop_twist_keyboard
+-DCATKIN_DEVEL_PREFIX=/home/robot/catkin_ws_base/devel -DCMAKE_INSTALL_PREFIX=/home/robot/catkin_ws_base/install -G Unix Makefiles

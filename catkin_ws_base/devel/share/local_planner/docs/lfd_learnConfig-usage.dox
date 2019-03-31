@@ -1,0 +1,15 @@
+\subsubsection usage Usage
+\verbatim
+<node name="local_planner" pkg="local_planner" type="local_planner">
+  <param name="cp_num" type="int" value="1" />
+  <param name="ccp_index" type="int" value="0" />
+  <param name="ccp0_x" type="double" value="0.0" />
+  <param name="ccp0_y" type="double" value="0.0" />
+  <param name="ccp1_x" type="double" value="0.0" />
+  <param name="ccp1_y" type="double" value="0.0" />
+  <param name="ccp2_x" type="double" value="0.0" />
+  <param name="ccp2_y" type="double" value="0.0" />
+  <param name="kind" type="int" value="1" />
+</node>
+\endverbatim
+

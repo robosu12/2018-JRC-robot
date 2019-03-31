@@ -1,0 +1,8 @@
+prefix=/program/robot_behavior/jdrobot_ws/src/map_process/build/devel
+
+Name: map_process
+Description: Description of map_process
+Version: 0.0.0
+Cflags: -I/program/robot_behavior/jdrobot_ws/src/map_process/include
+Libs: -L/program/robot_behavior/jdrobot_ws/src/map_process/build/devel/lib -lmap_process
+Requires: nav_msgs roscpp rospy std_msgs

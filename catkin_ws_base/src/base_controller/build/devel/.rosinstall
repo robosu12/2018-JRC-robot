@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/robot/catkin_ws_base/src/base_controller/build/devel/setup.sh

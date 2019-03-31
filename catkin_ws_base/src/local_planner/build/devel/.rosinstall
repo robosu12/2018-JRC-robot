@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /program/robot_behavior/jdrobot_ws/src/local_planner/build/devel/setup.sh

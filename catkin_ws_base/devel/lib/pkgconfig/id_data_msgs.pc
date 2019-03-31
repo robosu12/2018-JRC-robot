@@ -1,0 +1,8 @@
+prefix=/home/robot/catkin_ws_base/devel
+
+Name: id_data_msgs
+Description: Description of id_data_msgs
+Version: 0.1.0
+Cflags: -I/home/robot/catkin_ws_base/devel/include
+Libs: -L/home/robot/catkin_ws_base/devel/lib 
+Requires: geometry_msgs message_generation message_runtime sensor_msgs std_msgs

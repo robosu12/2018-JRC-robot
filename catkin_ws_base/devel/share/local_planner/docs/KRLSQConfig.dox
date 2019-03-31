@@ -1,0 +1,6 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~Is_train" : \b [bool] is train or not min: False, default: True, max: True
+

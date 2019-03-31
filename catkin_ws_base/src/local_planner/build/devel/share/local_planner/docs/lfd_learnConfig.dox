@@ -1,0 +1,14 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~cp_num" : \b [int] the number of control points min: 0, default: 1, max: 10
+- \b "~ccp_index" : \b [int] the index of current control point min: 0, default: 0, max: 100
+- \b "~ccp0_x" : \b [double] the x of current control point0 min: 0.0, default: 0.0, max: 15.0
+- \b "~ccp0_y" : \b [double] the y of current control point0 min: 0.0, default: 0.0, max: 15.0
+- \b "~ccp1_x" : \b [double] the x of current control point1 min: 0.0, default: 0.0, max: 15.0
+- \b "~ccp1_y" : \b [double] the y of current control point1 min: 0.0, default: 0.0, max: 15.0
+- \b "~ccp2_x" : \b [double] the x of current control point2 min: 0.0, default: 0.0, max: 15.0
+- \b "~ccp2_y" : \b [double] the y of current control point2 min: 0.0, default: 0.0, max: 15.0
+- \b "~kind" : \b [int] A interpolate parameter which is edited via an enum min: 0, default: 1, max: 2
+

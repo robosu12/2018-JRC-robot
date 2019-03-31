@@ -1,0 +1,8 @@
+prefix=/program/robot_behavior/jdrobot_ws/src/local_planner/build/devel
+
+Name: local_planner
+Description: Description of local_planner
+Version: 0.0.0
+Cflags: -I/program/robot_behavior/jdrobot_ws/src/local_planner/build/devel/include -I/program/robot_behavior/jdrobot_ws/src/local_planner/include
+Libs: -L/program/robot_behavior/jdrobot_ws/src/local_planner/build/devel/lib -llocal_planner
+Requires: nav_msgs roscpp rospy sensor_msgs tf

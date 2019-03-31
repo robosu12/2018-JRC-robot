@@ -1,0 +1,8 @@
+prefix=/program/robot_behavior/jdrobot_ws/src/global_planner/build/devel
+
+Name: global_planner
+Description: Description of global_planner
+Version: 0.0.0
+Cflags: -I/program/robot_behavior/jdrobot_ws/src/global_planner/include
+Libs: -L/program/robot_behavior/jdrobot_ws/src/global_planner/build/devel/lib -lglobal_planner
+Requires: nav_msgs roscpp rospy

@@ -1,0 +1,7 @@
+\subsubsection usage Usage
+\verbatim
+<node name="local_planner" pkg="local_planner" type="local_planner">
+  <param name="Is_train" type="bool" value="True" />
+</node>
+\endverbatim
+
